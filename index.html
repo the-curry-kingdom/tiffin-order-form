@@ -239,8 +239,8 @@
     </div>
 
     <!-- ACKNOWLEDGEMENT CHECKBOX -->
-    <div class="ack-field" id="ackField" onclick="toggleAck()">
-      <input type="checkbox" id="ackCheck" onclick="event.stopPropagation();toggleAck()" />
+    <div class="ack-field" id="ackField">
+      <input type="checkbox" id="ackCheck" onchange="ackChanged()" />
       <label class="ack-label" for="ackCheck">
         I understand that my tiffin order will be confirmed only after the e-Transfer payment has been received. I'm happy to proceed and will send my payment to <strong>payments@thecurrykingdom.com</strong> promptly.
       </label>
@@ -347,7 +347,7 @@
 
       var prefLabel = pref==='Veg'?'Veg': pref==='Egg'?'Veg + Egg':'Veg + Non-Veg';
       document.getElementById('priceAmount').textContent = '$' + price + ' CAD';
-      document.getElementById('priceDesc').textContent   = meal + ' · ' + prefLabel + ' · ' + freq;
+      document.getElementById('priceDesc').textContent   = meal + ' · ' + prefLabel + ' · ' + freq + ' · Inclusive of tax & delivery';
       box.style.display = 'block';
     }
 
@@ -399,9 +399,7 @@
       updatePrice();
     }
 
-    function toggleAck(){
-      var cb = document.getElementById('ackCheck');
-      cb.checked = !cb.checked;
+    function ackChanged(){
       document.getElementById('ackField').classList.remove('has-error');
       document.getElementById('ackError').style.display='none';
     }
