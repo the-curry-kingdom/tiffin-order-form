@@ -239,6 +239,9 @@
     </div>
 
     <!-- ACKNOWLEDGEMENT CHECKBOX -->
+    <div class="info-box" style="margin-top:1rem">
+  🕔 All tiffins are delivered between <strong>5:00 pm – 6:00 pm</strong>.
+    </div>
     <div class="ack-field" id="ackField">
       <input type="checkbox" id="ackCheck" onchange="ackChanged()" />
       <label class="ack-label" for="ackCheck">
@@ -263,6 +266,7 @@
     // ── Pricing table ─────────────────────────────────────────
     // Keys: "MealType|Preference|Frequency"  (Preference: Veg / Egg / NonVeg)
     var PRICES = {
+      'Mini Meal|trial':15,  'Squire Meal|trial':20,  'Queens Meal|trial':25,  'King Meal|trial':30,
       'Mini Meal|Veg|Weekly':55,    'Mini Meal|Egg|Weekly':50,    'Mini Meal|NonVeg|Weekly':55,
       'Mini Meal|Veg|Monthly':160,  'Mini Meal|Egg|Monthly':170,  'Mini Meal|NonVeg|Monthly':190,
       'Squire Meal|Veg|Weekly':65,  'Squire Meal|Egg|Weekly':70,  'Squire Meal|NonVeg|Weekly':75,
@@ -332,7 +336,13 @@
 
       // One-day trial has no price row — hide
       if(freqChip && freqChip.textContent.trim()==='One-day trial'){
-        box.style.display='none'; return;
+      if(!mealCard){ box.style.display='none'; return; }
+      var trialPrice = {'Mini Meal':15,'Squire Meal':20,'Queens Meal':25,'King Meal':30};
+      var tp = trialPrice[mealCard.dataset.meal];
+      if(!tp){ box.style.display='none'; return; }
+      document.getElementById('priceAmount').textContent = '$' + tp + ' CAD';
+      document.getElementById('priceDesc').textContent   = mealCard.dataset.meal + ' · One-day trial · Inclusive of tax & delivery';
+      box.style.display='block'; return;
       }
 
       if(!mealCard||!freqChip||!pref){ box.style.display='none'; return; }
